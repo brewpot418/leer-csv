@@ -23,10 +23,15 @@ def transform_municipalities(df: pd.DataFrame) -> List[Dict[str, str]]:
     """
     municipalities = []
     for _, row in df.iterrows():
+        id_provincia = str(row["CPRO"]).zfill(2)
+        id_municipio = str(row["CMUN"]).zfill(3)
+        full_id = int(
+            id_provincia + id_municipio
+        )  # 👈 fuerzo el numero para que quite el cero de la izquierda
         municipalities.append(
             {
-                "ID_PROVINCIA": str(row["CPRO"]).zfill(2),
-                "ID_MUNICIPIO": str(row["CMUN"]).zfill(3),
+                "ID_PROVINCIA": id_provincia,
+                "ID_MUNICIPIO": str(full_id),  # 👈 lo devuelvo limpio 
                 "NOMBRE_MUNICIPIO": row["NOMBRE"].strip(),
             }
         )
